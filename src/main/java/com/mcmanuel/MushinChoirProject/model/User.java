@@ -1,21 +1,23 @@
-package com.mcmanuel.MushinChoirProject.entity;
+package com.mcmanuel.MushinChoirProject.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class User {
-
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
+    @Column(name = "lastname", nullable = false)
     private String lastName;
+
+    @Column(name = "lastname", nullable = false)
     private String firstName;
 
-    @Column(name = "fullname")
+    @Column(name = "fullname", nullable = false)
     private String fullName = fullName();
 
     private int grade;
@@ -28,8 +30,10 @@ public class User {
     @Email
     private String email;
 
+    @Column(nullable = false)
     private String password;
-    private boolean enabled;
+
+    private boolean isEnabled;
 
 
     public Integer getUserId() {
@@ -57,7 +61,6 @@ public class User {
     public String getFullName() {
         return fullName;
     }
-
 
     public int getGrade() {
         return grade;
@@ -116,11 +119,11 @@ public class User {
     }
 
     public boolean isEnabled() {
-        return enabled;
+        return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.isEnabled = enabled;
     }
 
     public String fullName(){
