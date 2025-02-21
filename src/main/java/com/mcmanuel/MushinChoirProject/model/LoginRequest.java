@@ -1,16 +1,19 @@
-package com.mcmanuel.MushinChoirProject;
+package com.mcmanuel.MushinChoirProject.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LoginRequest {
 
-    private String email;
+    private String username;
     private String password;
 
     public String getEmail() {
-        return email;
+        return username;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.username = username;
     }
 
     public String getPassword() {

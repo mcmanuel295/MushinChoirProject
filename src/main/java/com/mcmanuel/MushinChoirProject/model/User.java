@@ -1,10 +1,13 @@
 package com.mcmanuel.MushinChoirProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.Builder;
 
 @Entity
+@Builder
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class User {
     @Id
@@ -20,12 +23,15 @@ public class User {
     @Column(name = "fullname", nullable = false)
     private String fullName = fullName();
 
-    private int grade;
+    private Grade grade;
     private String part;
     private String district;
     private String group;
 
     private String ImageString;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Email
     private String email;
@@ -35,99 +41,120 @@ public class User {
 
     private boolean isEnabled;
 
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Assignment answer;
+
+    public User() {
+    }
+
+    public String fullName() {
+        return getLastName() + " " + getFirstName();
+
+    }
 
     public Integer getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getFullName() {
+        return this.fullName;
+    }
+
+    public Grade getGrade() {
+
+        return this.grade;
+    }
+
+    public String getPart() {
+        return this.part;
+    }
+
+    public String getDistrict() {
+        return this.district;
+    }
+
+    public String getGroup() {
+        return this.group;
+    }
+
+    public String getImageString() {
+        return this.ImageString;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public @Email String getEmail() {
+        return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public boolean isEnabled() {
+        return this.isEnabled;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-        fullName();
-    }
-
-    public String getFirstName() {
-        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-        fullName();
     }
 
-    public String getFullName() {
-        return fullName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
-    }
-
-    public String getPart() {
-        return part;
     }
 
     public void setPart(String part) {
         this.part = part;
     }
 
-    public String getDistrict() {
-        return district;
-    }
-
     public void setDistrict(String district) {
         this.district = district;
-    }
-
-    public String getGroup() {
-        return group;
     }
 
     public void setGroup(String group) {
         this.group = group;
     }
 
-    public String getImageString() {
-        return ImageString;
+    public void setImageString(String ImageString) {
+        this.ImageString = ImageString;
     }
 
-    public void setImageString(String imageString) {
-        ImageString = imageString;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
+    public void setEmail(@Email String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return isEnabled;
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
-
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
-    }
-
-    public String fullName(){
-        return getLastName()+" "+ getFirstName();
-    }
-
 }
