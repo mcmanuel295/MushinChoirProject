@@ -2,19 +2,23 @@ package com.mcmanuel.MushinChoirProject.service.intf;
 
 import com.mcmanuel.MushinChoirProject.model.LoginRequest;
 import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.model.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-    User addUser(User user);
+    UserDto addUser(User user);
 
-    User getUser(Integer userId);
+    UserDto getUser(Integer userId);
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    User updateUser(Integer userId, User updatedUser);
+    List<UserDto> getAllUsersByGrade(String grade);
+
+    UserDto updateUser(Integer userId, User updatedUser);
 
     void deleteUser(Integer userId);
 
     boolean login(LoginRequest loginRequest);
+
 }
