@@ -25,7 +25,7 @@ public class User {
 
     private Grade grade;
     private String part;
-    private String district;
+    private District district;
     private String group;
 
     private String ImageString;
