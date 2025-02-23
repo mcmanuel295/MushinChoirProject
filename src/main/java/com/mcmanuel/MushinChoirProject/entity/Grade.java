@@ -1,4 +1,4 @@
-package com.mcmanuel.MushinChoirProject.model;
+package com.mcmanuel.MushinChoirProject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 public class Grade {
 
     @Id

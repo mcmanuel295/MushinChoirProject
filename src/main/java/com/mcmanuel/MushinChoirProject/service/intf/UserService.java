@@ -1,7 +1,7 @@
 package com.mcmanuel.MushinChoirProject.service.intf;
 
 import com.mcmanuel.MushinChoirProject.model.LoginRequest;
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
 
 import java.util.List;

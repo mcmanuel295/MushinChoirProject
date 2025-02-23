@@ -1,8 +1,8 @@
 package com.mcmanuel.MushinChoirProject.repository;
 
 
-import com.mcmanuel.MushinChoirProject.model.Grade;
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.Grade;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

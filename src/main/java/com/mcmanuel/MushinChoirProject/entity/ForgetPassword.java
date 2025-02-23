@@ -1,18 +1,15 @@
-package com.mcmanuel.MushinChoirProject.model;
+package com.mcmanuel.MushinChoirProject.entity;
 
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-
+@Builder
 public class ForgetPassword {
 
     private Integer forgetPasswordId;

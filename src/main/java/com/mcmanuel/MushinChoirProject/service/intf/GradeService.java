@@ -1,6 +1,6 @@
 package com.mcmanuel.MushinChoirProject.service.intf;
 
-import com.mcmanuel.MushinChoirProject.model.Grade;
+import com.mcmanuel.MushinChoirProject.entity.Grade;
 
 import java.util.List;
 

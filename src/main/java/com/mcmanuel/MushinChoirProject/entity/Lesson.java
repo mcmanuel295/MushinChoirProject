@@ -1,22 +1,22 @@
-package com.mcmanuel.MushinChoirProject.model;
+package com.mcmanuel.MushinChoirProject.entity;
 
-import jakarta.persistence.Entity;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
 import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Assignment {
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer assignmentId;
+    private Integer lessonId;
     private String title;
     private String content;
 
@@ -24,4 +24,10 @@ public class Assignment {
     @JoinColumn(name = "grade")
     private Grade grade;
 
+
 }
+
+
+
+
+

@@ -1,4 +1,7 @@
-package com.mcmanuel.MushinChoirProject.model;
+package com.mcmanuel.MushinChoirProject.service;
+
+import com.mcmanuel.MushinChoirProject.entity.User;
+import com.mcmanuel.MushinChoirProject.model.UserDto;
 
 public class UtilsService {
 

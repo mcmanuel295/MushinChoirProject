@@ -2,7 +2,7 @@ package com.mcmanuel.MushinChoirProject.controller;
 
 
 import com.mcmanuel.MushinChoirProject.model.LoginRequest;
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
 import com.mcmanuel.MushinChoirProject.service.intf.UserService;
 import org.springframework.http.HttpStatus;
