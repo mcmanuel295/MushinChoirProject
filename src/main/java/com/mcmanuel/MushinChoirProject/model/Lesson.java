@@ -1,9 +1,33 @@
 package com.mcmanuel.MushinChoirProject.model;
 
-import java.util.List;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
 public class Lesson {
 
-    private String contentStages;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer lessonId;
+    private String title;
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "grade")
     private Grade grade;
+
+
 }
+
+
+
+
+
