@@ -1,6 +1,6 @@
 package com.mcmanuel.MushinChoirProject.service;
 
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

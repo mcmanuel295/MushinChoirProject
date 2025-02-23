@@ -1,6 +1,6 @@
 package com.mcmanuel.MushinChoirProject.service;
 
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

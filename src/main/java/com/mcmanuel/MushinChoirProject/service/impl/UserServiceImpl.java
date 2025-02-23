@@ -3,9 +3,9 @@ package com.mcmanuel.MushinChoirProject.service.impl;
 
 import com.mcmanuel.MushinChoirProject.exception.GradeNotFoundException;
 import com.mcmanuel.MushinChoirProject.model.LoginRequest;
-import com.mcmanuel.MushinChoirProject.model.User;
+import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
-import com.mcmanuel.MushinChoirProject.model.UtilsService;
+import com.mcmanuel.MushinChoirProject.service.UtilsService;
 import com.mcmanuel.MushinChoirProject.repository.UserRepository;
 import com.mcmanuel.MushinChoirProject.service.JwtService;
 import com.mcmanuel.MushinChoirProject.service.intf.GradeService;

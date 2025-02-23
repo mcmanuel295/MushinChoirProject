@@ -1,5 +1,6 @@
 package com.mcmanuel.MushinChoirProject.model;
 
+import com.mcmanuel.MushinChoirProject.entity.Grade;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

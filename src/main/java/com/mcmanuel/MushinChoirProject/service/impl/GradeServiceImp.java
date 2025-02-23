@@ -1,6 +1,6 @@
 package com.mcmanuel.MushinChoirProject.service.impl;
 
-import com.mcmanuel.MushinChoirProject.model.Grade;
+import com.mcmanuel.MushinChoirProject.entity.Grade;
 import com.mcmanuel.MushinChoirProject.repository.GradeRepository;
 import com.mcmanuel.MushinChoirProject.service.intf.GradeService;
 import org.springframework.stereotype.Service;
