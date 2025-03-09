@@ -1,24 +1,39 @@
 package com.mcmanuel.MushinChoirProject.service.intf;
 
+import com.mcmanuel.MushinChoirProject.model.ChangePassword;
 import com.mcmanuel.MushinChoirProject.model.LoginRequest;
 import com.mcmanuel.MushinChoirProject.entity.User;
+import com.mcmanuel.MushinChoirProject.model.Register;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
+import jakarta.mail.MessagingException;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
-    UserDto addUser(User user);
 
-    UserDto getUser(Integer userId);
+    UserDto addUser(Register registeringUser) throws  MessagingException;
 
-    List<UserDto> getAllUsers();
+    UserDto getUserById(UUID userId);
 
-    List<UserDto> getAllUsersByGrade(String grade);
+    UserDto getUserByEmail(String email);
 
-    UserDto updateUser(Integer userId, User updatedUser);
+    List<UserDto> getAllUsers(int pageNo, int size);
 
-    void deleteUser(Integer userId);
+    List<UserDto> getAllUsersByGrade(String grade,int pageNum, int pageSize);
+
+    UserDto updateUser(UUID userId, User updatedUser);
+
+    void deleteUser(UUID userId);
 
     boolean login(LoginRequest loginRequest);
+
+    void sendUserOtp(String email) throws MessagingException;
+
+    boolean getUserOtp(String otp);
+
+    void activateAccount(String otp);
+
+    void changePassword(String email,ChangePassword changePassword);
 
 }

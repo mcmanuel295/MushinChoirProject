@@ -6,12 +6,13 @@ import com.mcmanuel.MushinChoirProject.service.intf.GradeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class GradeServiceImp implements GradeService {
+public class GradeServiceImpl implements GradeService {
     private final GradeRepository gradeRepository;
 
-    public GradeServiceImp(GradeRepository gradeRepository) {
+    public GradeServiceImpl(GradeRepository gradeRepository) {
         this.gradeRepository = gradeRepository;
     }
 
@@ -19,4 +20,10 @@ public class GradeServiceImp implements GradeService {
     public List<Grade> getAllGrades() {
         return gradeRepository.findAll();
     }
+
+    @Override
+    public Optional<Grade> getGradeById(String gradeId) {
+        return gradeRepository.findById(gradeId);
+    }
+
 }

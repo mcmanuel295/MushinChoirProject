@@ -1,0 +1,7 @@
+package com.mcmanuel.MushinChoirProject.exception;
+
+public class OtpNotFoundException extends RuntimeException{
+    public OtpNotFoundException(String message) {
+        super(message);
+    }
+}
