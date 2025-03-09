@@ -36,4 +36,5 @@ public interface UserService {
 
     void changePassword(String email,ChangePassword changePassword);
 
+    boolean nextGrade(UUID userId);
 }

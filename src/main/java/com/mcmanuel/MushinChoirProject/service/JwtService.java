@@ -16,10 +16,16 @@ import java.util.function.Function;
 public class JwtService {
     private final String secretKeyString;
 
-    public JwtService() throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance("Hmac SHA-256");
-        SecretKey secretKey =  keyGen.generateKey();
-        secretKeyString = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+    public JwtService() {
+        KeyGenerator keyGen;
+        try {
+            keyGen = KeyGenerator.getInstance("HmacSHA256");
+            SecretKey secretKey =  keyGen.generateKey();
+            secretKeyString = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private SecretKey getKey(){
@@ -27,7 +33,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(bytes);
     }
 
-    public String generateToken(String email) {
+    public String generateOtp(String email) {
         Map<String, Objects> claims = new HashMap<>();
         return Jwts
                 .builder()

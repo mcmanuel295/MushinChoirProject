@@ -8,4 +8,6 @@ public enum Group {
     ALAFIA,
     IDIORO ,
     ODIOLOWO;
+
+
 }
