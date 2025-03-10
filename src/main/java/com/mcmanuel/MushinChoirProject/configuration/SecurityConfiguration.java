@@ -10,10 +10,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfiguration {
@@ -30,17 +33,18 @@ private final MyUserDetailsService myUserDetailsService;
         return http
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers(HttpMethod.POST, "login")
+                                .requestMatchers(HttpMethod.POST, "/auth/**")
                                 .permitAll()
-//                                .anyRequest()
-//                                .authenticated()
+                                .anyRequest()
+                                .permitAll()
 
                 )
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
@@ -63,4 +67,17 @@ private final MyUserDetailsService myUserDetailsService;
         return new BCryptPasswordEncoder(12);
     }
 
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("GET","POST","PUT","DELETE")
+                        .allowedOrigins("*");
+
+            WebMvcConfigurer.super.addCorsMappings(registry);
+            }
+        };
+    }
 }
