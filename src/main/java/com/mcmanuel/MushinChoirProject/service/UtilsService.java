@@ -6,35 +6,39 @@ import com.mcmanuel.MushinChoirProject.model.UserDto;
 public class UtilsService {
 
     public static User ToUser(UserDto userDto){
-        return User.builder()
-                .userId(userDto.userId())
-                .lastName(userDto.lastName())
-                .firstName(userDto.firstName())
-                .grade(userDto.grade())
-                .part(userDto.part())
-                .district(userDto.district())
-                .group(userDto.group())
-                .role(userDto.role())
-                .email(userDto.email())
-                .isEnabled(userDto.isEnabled())
-                .build();
+                User user = new User();
+
+                user.setUserId(userDto.userId());
+                user.setLastName(userDto.lastName());
+                user.setFirstName(userDto.firstName());
+                user.setGrade(userDto.grade());
+                user.setPart(userDto.part());
+                user.setDistrict(userDto.district());
+                user.setGroup(userDto.group());
+                user.setRole(userDto.role());
+                user.setEmail(userDto.email());
+                user.setEnabled(userDto.isEnabled());
+                user.setDateCreated(userDto.dateCreated());
+        return user;
     }
 
     public static UserDto toUserDto(User user){
-        return UserDto
-                .builder()
-                .userId(user.getUserId())
-                .lastName(user.getLastName())
-                .firstName(user.getFirstName())
-                .fullName(user.fullName())
-                .grade(user.getGrade())
-                .part(user.getPart())
-                .district(user.getDistrict())
-                .group(user.getGroup())
-                .role(user.getRole())
-                .email(user.getEmail())
-                .isEnabled(user.isEnabled())
-                .ImageString(user.getImageString())
-                .build();
+                return new UserDto(
+                        user.getUserId(),
+                        user.getLastName(),
+                        user.getFirstName(),
+                        user.getFullName(),
+                        user.getGrade(),
+                        user.getPart(),
+                        user.getDistrict(),
+                        user.getGroup(),
+                        user.getRole(),
+                        user.getEmail(),
+                        user.getImageString(),
+                        user.isEnabled(),
+                        user.getDateCreated()
+                        );
     }
+
+
 }

@@ -1,5 +1,9 @@
-package com.mcmanuel.MushinChoirProject.model;
+package com.mcmanuel.MushinChoirProject.service;
 
+import com.mcmanuel.MushinChoirProject.entity.Otp;
+import com.mcmanuel.MushinChoirProject.entity.User;
+import com.mcmanuel.MushinChoirProject.repository.OtpRepository;
+import com.mcmanuel.MushinChoirProject.service.impl.OtpService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,9 +13,10 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED;
 
@@ -21,24 +26,31 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 public class EmailService {
     private JavaMailSender mailSender;
     private SpringTemplateEngine templateEngine;
+    private final OtpService otpService;
 
-    public void sendEmail(
+    public EmailService(OtpRepository otpRepository, OtpService otpService) {
+        this.otpService = otpService;
+    }
+
+    public void sendValidationEmail(String email) throws MessagingException {
+        var generatedOtp =generateAndSaveActivationOtp(email);
+
+        sendEmail(email,
+                "url",
+                generatedOtp.getGeneratedOtp());
+    }
+
+
+
+    private void sendEmail(
             String to,
-            String name,
-            String headerName,
-            String subject,
             String confirmationUrl,
             String activationCode
     ) throws MessagingException {
 
         String templateName;
 
-        if (headerName == null) {
-            templateName= "comfirm-email";
-        }
-        else {
-            templateName=headerName.toLowerCase();
-        }
+        templateName = "otp-confirmation".toLowerCase();
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(
@@ -49,10 +61,9 @@ public class EmailService {
 
         helper.setFrom("contact@gmail.com");
         helper.setTo(to);
-        helper.setSubject(subject);
+        helper.setSubject("OTP CONFIRMATION");
 
         Map<String,Object> properties = new HashMap<>();
-        properties.put("name",name);
         properties.put("configurationUrl", confirmationUrl);
         properties.put("activation_url",activationCode);
 
@@ -65,4 +76,33 @@ public class EmailService {
 
         mailSender.send(mimeMessage);
     }
+
+    private Otp generateAndSaveActivationOtp(String email){
+        Otp generatedOtp = new Otp();
+
+        generatedOtp.setGeneratedOtp(generateActivationCode());
+        generatedOtp.setCreatedAt(LocalDateTime.now());
+        generatedOtp.setExpiresAt(LocalDateTime.now().plusHours(1));
+        generatedOtp.setEmail(email);
+        generatedOtp.setVerified(false);
+        otpService.addOtp(generatedOtp);
+
+        return generatedOtp;
+    }
+
+
+    private String generateActivationCode(){
+        final String characters = "1234567890";
+        StringBuilder builder = new StringBuilder();
+        SecureRandom secureRandom= new SecureRandom();
+
+        for (int i = 0; i < 6; i++) {
+            int index = secureRandom.nextInt(characters.length());
+            builder.append(characters.charAt(index));
+        }
+        return builder.toString();
+    }
+
+
+
 }

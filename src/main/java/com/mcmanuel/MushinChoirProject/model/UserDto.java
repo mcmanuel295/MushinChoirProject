@@ -5,22 +5,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
 public record UserDto(
-        Integer userId,
+        UUID userId,
         String lastName,
         String firstName,
         String fullName,
         Grade grade,
-        String part,
+        Part part,
         String district,
-        String group,
-        String ImageString,
+        Group group,
         Role role,
         String email,
-        boolean isEnabled
+        String ImageString,
+        boolean isEnabled,
+        LocalDateTime dateCreated
 
 ) {
 }

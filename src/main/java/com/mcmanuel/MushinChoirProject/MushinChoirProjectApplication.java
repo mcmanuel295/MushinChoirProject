@@ -25,20 +25,5 @@ public class MushinChoirProjectApplication {
     public static void main(String[] args) {
 		SpringApplication.run(MushinChoirProjectApplication.class, args);
 	}
-//
-//	@Bean
-//	public CommandLineRunner commandLineRunner(){
-//		return args -> {
-//			if(gradeService.getGradeById("PRELIM").isEmpty()){
-//				Grade grade = new Grade("PRELIM");
-//				gradeService.addGrade(grade);
-//				gradeService.addGrade(new Grade("GRADE 1"));
-//				gradeService.addGrade(new Grade("GRADE 2"));
-//				gradeService.addGrade(new Grade("GRADE 3"));
-//				gradeService.addGrade(new Grade("GRADE 4"));
-//				gradeService.addGrade(new Grade("GRADE 5"));
-//			}
-//			System.out.println("grades created");
-//		};
-//	}
+
 }
