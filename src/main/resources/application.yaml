@@ -3,13 +3,6 @@ spring:
     name: MushinChoirProject
 
 
-  datasource:
-    url : "jdbc:mysql://localhost:3306/choirdb"
-    password : Oea75357@
-    username: "root"
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-
 
 
   jpa:
