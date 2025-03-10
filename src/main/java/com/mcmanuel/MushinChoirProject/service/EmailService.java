@@ -1,7 +1,6 @@
 package com.mcmanuel.MushinChoirProject.service;
 
 import com.mcmanuel.MushinChoirProject.entity.Otp;
-import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.repository.OtpRepository;
 import com.mcmanuel.MushinChoirProject.service.impl.OtpService;
 import jakarta.mail.MessagingException;
@@ -24,11 +23,11 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 @Service
 @Async
 public class EmailService {
-    private JavaMailSender mailSender;
-    private SpringTemplateEngine templateEngine;
+    private final JavaMailSender mailSender;
     private final OtpService otpService;
 
-    public EmailService(OtpRepository otpRepository, OtpService otpService) {
+    public EmailService(OtpRepository otpRepository, JavaMailSender mailSender, OtpService otpService) {
+        this.mailSender = mailSender;
         this.otpService = otpService;
     }
 
@@ -41,16 +40,13 @@ public class EmailService {
     }
 
 
-
     private void sendEmail(
             String to,
             String confirmationUrl,
             String activationCode
     ) throws MessagingException {
 
-        String templateName;
 
-        templateName = "otp-confirmation".toLowerCase();
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(
@@ -63,16 +59,8 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject("OTP CONFIRMATION");
 
-        Map<String,Object> properties = new HashMap<>();
-        properties.put("configurationUrl", confirmationUrl);
-        properties.put("activation_url",activationCode);
-
-
-        Context context =new Context();
-        context.setVariables(properties);
-
-        String template =templateEngine.process(templateName,context);
-        helper.setText(template,true);
+        String text = "Please confirm your OTP:"+activationCode+" confirmation url"+confirmationUrl;
+        helper.setText(text,true);
 
         mailSender.send(mimeMessage);
     }
