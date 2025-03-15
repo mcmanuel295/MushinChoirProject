@@ -1,26 +1,32 @@
 package com.mcmanuel.MushinChoirProject.model;
 
-import org.springframework.stereotype.Component;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
-@Component
 public class LoginRequest {
 
-    private String username;
+    @Email
+    @NotEmpty
+    private String email;
+
     private String password;
 
+
     public String getEmail() {
-        return username;
+        return this.email;
     }
 
-    public void setEmail(String email) {
-        this.username = username;
-    }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+
+    @Override
+    public String toString() {
+        return "LoginRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

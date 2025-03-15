@@ -9,8 +9,6 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
 import lombok.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -58,7 +56,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private boolean isEnabled;
+    private boolean isActivated;
 
     @Column(updatable = false)
     private LocalDateTime dateCreated;
@@ -161,12 +159,12 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return isEnabled;
+    public boolean isActivated() {
+        return isActivated;
     }
 
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 
     public LocalDateTime getDateCreated() {

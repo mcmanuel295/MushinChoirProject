@@ -26,7 +26,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginRequest){
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
+        System.out.println("Email: " + loginRequest.getEmail());
+        System.out.println("Password: " + loginRequest.getPassword());
+
         if (service.login(loginRequest)){
             return new ResponseEntity<>("successful",HttpStatus.ACCEPTED);
         }

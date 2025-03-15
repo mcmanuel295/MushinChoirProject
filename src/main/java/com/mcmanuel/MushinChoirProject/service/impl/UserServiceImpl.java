@@ -13,6 +13,7 @@ import com.mcmanuel.MushinChoirProject.service.JwtService;
 import com.mcmanuel.MushinChoirProject.service.intf.GradeService;
 import com.mcmanuel.MushinChoirProject.service.intf.UserService;
 import jakarta.mail.MessagingException;
+import org.slf4j.Logger;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +36,6 @@ public class UserServiceImpl implements UserService {
     private final GradeService gradeService;
     private final EmailService emailService;
     private final OtpService otpService;
-
 
     public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtService jwtService, BCryptPasswordEncoder passwordEncoder, GradeService gradeService, EmailService emailService, OtpService otpService) {
         this.userRepository = userRepository;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         );
 
         user.setGrade(null);
-        user.setEnabled(false);
+        user.setActivated(false);
         user.setRole(Role.USER);
         user.setDateCreated(LocalDateTime.now());
         emailService.sendValidationEmail(user.getEmail());
@@ -156,17 +156,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(LoginRequest loginRequest) {
+        System.out.println(loginRequest.getEmail()+" "+loginRequest.getPassword());
 //        check if user email is verified
         var user = userRepository.findByEmail( loginRequest.getEmail())
                 .orElseThrow(()->
                 new UsernameNotFoundException("user with email"+loginRequest.getEmail()+" not found"));
 
-        if (user.isEnabled()) {
-            throw new UserEmailNotVerified("The user with email "+user.getEmail()+" is not verified");
-        }
+        System.out.println("the returned user is "+user.getEmail()+" "+user.getPassword());
+
 
         Authentication authentication= authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(user.getEmail(),loginRequest.getPassword())
         );
 
         if(authentication.isAuthenticated()){
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
                     new UsernameNotFoundException("The use with email" + savedOtp.getEmail() + "not found"));
 
             Grade grade = gradeService.getGradeById("PRELIM");
-            user.setEnabled(true);
+            user.setActivated(true);
             user.setGrade(grade);
 
             otpService.deleteOtp(savedOtp.getOtp());

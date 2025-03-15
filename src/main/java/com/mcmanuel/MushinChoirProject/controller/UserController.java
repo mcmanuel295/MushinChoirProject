@@ -1,7 +1,5 @@
 package com.mcmanuel.MushinChoirProject.controller;
 
-
-import com.mcmanuel.MushinChoirProject.model.ChangePassword;
 import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
 import com.mcmanuel.MushinChoirProject.service.intf.UserService;

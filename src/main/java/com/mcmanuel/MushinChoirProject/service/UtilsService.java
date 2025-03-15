@@ -17,7 +17,7 @@ public class UtilsService {
                 user.setGroup(userDto.group());
                 user.setRole(userDto.role());
                 user.setEmail(userDto.email());
-                user.setEnabled(userDto.isEnabled());
+                user.setActivated(userDto.isEnabled());
                 user.setDateCreated(userDto.dateCreated());
         return user;
     }
@@ -35,7 +35,7 @@ public class UtilsService {
                         user.getRole(),
                         user.getEmail(),
                         user.getImageString(),
-                        user.isEnabled(),
+                        user.isActivated(),
                         user.getDateCreated()
                         );
     }
