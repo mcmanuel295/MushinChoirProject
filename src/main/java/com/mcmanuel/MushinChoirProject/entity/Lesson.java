@@ -1,6 +1,7 @@
 package com.mcmanuel.MushinChoirProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class Lesson {
 
     @ManyToOne
     @JoinColumn(name = "grade")
+    @JsonIgnore
     private Grade grade;
 
 

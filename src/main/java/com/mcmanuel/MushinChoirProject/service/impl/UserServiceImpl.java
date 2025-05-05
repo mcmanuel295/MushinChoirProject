@@ -1,9 +1,7 @@
 package com.mcmanuel.MushinChoirProject.service.impl;
 import com.mcmanuel.MushinChoirProject.entity.Grade;
-import com.mcmanuel.MushinChoirProject.exception.GradeNotFoundException;
 import com.mcmanuel.MushinChoirProject.exception.PasswordAndRepeatPasswordNotTheSame;
 import com.mcmanuel.MushinChoirProject.exception.OtpNotFoundException;
-import com.mcmanuel.MushinChoirProject.exception.UserEmailNotVerified;
 import com.mcmanuel.MushinChoirProject.model.*;
 import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.service.EmailService;
@@ -13,7 +11,6 @@ import com.mcmanuel.MushinChoirProject.service.JwtService;
 import com.mcmanuel.MushinChoirProject.service.intf.GradeService;
 import com.mcmanuel.MushinChoirProject.service.intf.UserService;
 import jakarta.mail.MessagingException;
-import org.slf4j.Logger;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +27,7 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    public final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final BCryptPasswordEncoder passwordEncoder ;
     private final GradeService gradeService;
@@ -63,15 +60,22 @@ public class UserServiceImpl implements UserService {
         user.setPassword(
                 passwordEncoder.encode( registeringUser.getPassword())
         );
-
         user.setGrade(null);
         user.setActivated(false);
-        user.setRole(Role.USER);
+
+        System.out.println("role is "+registeringUser.getRole());
+        if(registeringUser.getRole()==null){
+            user.setRole(Role.USER);
+        }
+        else {
+            user.setRole(registeringUser.getRole());
+        }
         user.setDateCreated(LocalDateTime.now());
         emailService.sendValidationEmail(user.getEmail());
 
         return UtilsService.toUserDto(userRepository.save(user));
     }
+
 
 
 
@@ -107,6 +111,7 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(UtilsService::toUserDto)
                 .toList();
+
     }
 
 
@@ -121,9 +126,14 @@ public class UserServiceImpl implements UserService {
                 .findAll(pageable)
                 .getContent()
                 .stream()
-                .filter(user -> user.getGrade().getGradeId().equals(grade.getGradeId()))
+                .filter(user -> user.getGrade()!=null && user.getGrade().getGradeId().equals(grade.getGradeId()))
                 .map(UtilsService::toUserDto)
                 .toList();
+    }
+
+    @Override
+    public List<String> getAllUsersByFullName() {
+        return userRepository.getAllUsersByFullName();
     }
 
 
@@ -170,8 +180,8 @@ public class UserServiceImpl implements UserService {
         );
 
         if(authentication.isAuthenticated()){
-            String otp = jwtService.generateOtp(loginRequest.getEmail());
-            System.out.println(otp);
+            String token = jwtService.generateToken(loginRequest.getEmail());
+            System.out.println(token);
             return true;
         }
         return false;
@@ -247,6 +257,27 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             var grade = gradeService.getGradeByLevel( user.getGrade().getGradeLevel()+1);
             user.setGrade(grade);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addAdmin(String fullName) {
+        System.out.println("in the admin method");
+        var user = userRepository.findByFullName(fullName);
+        if (user.isPresent()) {
+            user.get().setRole(Role.ADMIN);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dropAdmin(String fullName) {
+        var user = userRepository.findByFullName(fullName).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        if (user!= null){
+            user.setRole(Role.USER);
             return true;
         }
         return false;

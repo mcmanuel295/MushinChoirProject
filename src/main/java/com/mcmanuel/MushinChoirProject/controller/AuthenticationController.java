@@ -27,9 +27,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
-        System.out.println("Email: " + loginRequest.getEmail());
-        System.out.println("Password: " + loginRequest.getPassword());
-
         if (service.login(loginRequest)){
             return new ResponseEntity<>("successful",HttpStatus.ACCEPTED);
         }
@@ -37,6 +34,7 @@ public class AuthenticationController {
            return new ResponseEntity<>("failed",HttpStatus.NOT_ACCEPTABLE);
     }
 
+//    for forget password
     @PostMapping("/sendingOtp")
     public ResponseEntity<String> sendOtp(@RequestBody @Valid String email) throws MessagingException {
         service.sendUserOtp(email);

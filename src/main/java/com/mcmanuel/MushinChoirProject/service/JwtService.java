@@ -33,7 +33,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(bytes);
     }
 
-    public String generateOtp(String email) {
+    public String generateToken(String email) {
         Map<String, Objects> claims = new HashMap<>();
         return Jwts
                 .builder()

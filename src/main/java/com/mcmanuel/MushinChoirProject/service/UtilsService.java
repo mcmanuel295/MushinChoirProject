@@ -17,7 +17,7 @@ public class UtilsService {
                 user.setGroup(userDto.group());
                 user.setRole(userDto.role());
                 user.setEmail(userDto.email());
-                user.setActivated(userDto.isEnabled());
+                user.setActivated(userDto.isActivated());
                 user.setDateCreated(userDto.dateCreated());
         return user;
     }

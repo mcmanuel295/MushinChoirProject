@@ -16,11 +16,16 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(String email);
 
-//    @Query("select us from user us where us.grade=?1")
+    Optional<User> findByFullName(String fullName);
+
     List<User> findAllByGrade(Grade grade);
+
+    @Query("Select fullName from User u")
+    List<String> getAllUsersByFullName();
 
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.password =?2 WHERE u.email =?1")
     void updatePassword(String email,String password);
+
 }

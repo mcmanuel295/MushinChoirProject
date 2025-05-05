@@ -20,7 +20,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    private UUID userId = UUID.randomUUID();
+    @GeneratedValue
+//    @Column(columnDefinition = "VARCHAR(255)")
+    private UUID userId;
 
     @Column(name = "lastname", nullable = false)
     private String lastName;
@@ -31,7 +33,7 @@ public class User {
     @Column(name = "name", nullable = false)
     private String fullName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "grade_Id")
     @JsonIgnore
     private Grade grade;
@@ -136,7 +138,7 @@ public class User {
     }
 
     public Role getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(Role role) {
@@ -179,5 +181,4 @@ public class User {
         this.fullName=  this.lastName + " " + this.firstName;
 
     }
-
 }

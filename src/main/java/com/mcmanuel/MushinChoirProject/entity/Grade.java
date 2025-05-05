@@ -1,5 +1,6 @@
 package com.mcmanuel.MushinChoirProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -31,11 +32,13 @@ public class Grade {
     private List<Assignment> assignmentList;
 
     @OneToMany(mappedBy = "grade",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<User> user;
 
     public Grade(String gradeId) {
         this.gradeId = gradeId;
-        level++;
+        System.out.println("the level is "+level);
+        ++level;
         gradeLevel=level;
     }
 
@@ -85,11 +88,3 @@ public class Grade {
 
 }
 
-    /*
-    PRELIM("PRELIM"),
-    GRADE_1("GRADE 1"),
-    GRADE_2("GRADE 2"),
-    GRADE_3("GRADE 3"),
-    GRADE_4("GRADE 4"),
-    GRADE_5("GRADE 5");
-*/

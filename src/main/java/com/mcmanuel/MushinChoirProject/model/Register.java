@@ -16,6 +16,9 @@ public class Register {
     @Enumerated(EnumType.STRING)
     private Group groupOfDistrict;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Email
     private String email;
     private String password;
@@ -76,5 +79,13 @@ public class Register {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

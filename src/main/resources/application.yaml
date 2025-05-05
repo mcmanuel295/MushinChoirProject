@@ -3,6 +3,24 @@ spring:
     name: MushinChoirProject
 
 
+  datasource:
+    url : ${DATASOURCE_URL}
+    password : ${DATASOURCE_PASSWORD}
+    username: ${DATASOURCE_USER}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mcmanuel755@gmail.com
+    password: xoraowjcyvjwyaph
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
 
   jpa:
     hibernate:
@@ -24,3 +42,6 @@ lombok:
   annotation:
     processing:
       enabled=true:
+
+frontend:
+  url : ${FRONTEND_URL}

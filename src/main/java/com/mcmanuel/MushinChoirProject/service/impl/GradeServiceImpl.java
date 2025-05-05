@@ -19,19 +19,21 @@ public class GradeServiceImpl implements GradeService {
     }
 
 
-    @PostConstruct
-    private void init(){
-        addGrade(new Grade("PRELIM"));
-        addGrade(new Grade("GRADE 1"));
-        addGrade(new Grade("GRADE 2"));
-        addGrade(new Grade("GRADE 3"));
-        addGrade(new Grade("GRADE 4"));
-        addGrade(new Grade("GRADE 5"));
-    }
+//    @PostConstruct
+//    private void init(){
+//        addGrade(new Grade("PRELIM"));
+//        addGrade(new Grade("GRADE 1"));
+//        addGrade(new Grade("GRADE 2"));
+//        addGrade(new Grade("GRADE 3"));
+//        addGrade(new Grade("GRADE 4"));
+//        addGrade(new Grade("GRADE 5"));
+//    }
 
     @Override
     public Grade addGrade(Grade grade) {
+        int level = gradeRepository.getLevel();
         grade.setGradeId(grade.getGradeId());
+        grade.setGradeLevel(++level);
         return gradeRepository.save(grade);
     }
 

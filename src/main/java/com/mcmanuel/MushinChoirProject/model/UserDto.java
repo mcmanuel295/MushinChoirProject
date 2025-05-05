@@ -23,7 +23,7 @@ public record UserDto(
         Role role,
         String email,
         String ImageString,
-        boolean isEnabled,
+        boolean isActivated,
         LocalDateTime dateCreated
 
 ) {

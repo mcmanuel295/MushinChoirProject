@@ -6,9 +6,9 @@ import com.mcmanuel.MushinChoirProject.entity.User;
 import com.mcmanuel.MushinChoirProject.model.Register;
 import com.mcmanuel.MushinChoirProject.model.UserDto;
 import jakarta.mail.MessagingException;
-
 import java.util.List;
 import java.util.UUID;
+
 
 public interface UserService {
 
@@ -21,6 +21,8 @@ public interface UserService {
     List<UserDto> getAllUsers(int pageNo, int size);
 
     List<UserDto> getAllUsersByGrade(String grade,int pageNum, int pageSize);
+
+    List<String> getAllUsersByFullName();
 
     UserDto updateUser(UUID userId, User updatedUser);
 
@@ -37,4 +39,8 @@ public interface UserService {
     void changePassword(String email,ChangePassword changePassword);
 
     boolean nextGrade(UUID userId);
+
+    boolean addAdmin(String fullName);
+
+    boolean dropAdmin(String fullName);
 }

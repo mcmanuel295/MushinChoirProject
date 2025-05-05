@@ -1,6 +1,7 @@
 package com.mcmanuel.MushinChoirProject.configuration;
 
 import com.mcmanuel.MushinChoirProject.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,10 +34,9 @@ private final MyUserDetailsService myUserDetailsService;
         return http
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers(HttpMethod.POST, "/auth/**")
-                                .permitAll()
-                                .anyRequest()
-                                .permitAll()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/users/**").permitAll()
+                                .anyRequest().authenticated()
 
                 )
                 .formLogin(Customizer.withDefaults())
@@ -67,6 +67,9 @@ private final MyUserDetailsService myUserDetailsService;
         return new BCryptPasswordEncoder(12);
     }
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     public WebMvcConfigurer webMvcConfigurer(){
         return new WebMvcConfigurer() {
@@ -74,7 +77,7 @@ private final MyUserDetailsService myUserDetailsService;
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("GET","POST","PUT","DELETE")
-                        .allowedOrigins("*");
+                        .allowedOrigins(frontendUrl);
 
             WebMvcConfigurer.super.addCorsMappings(registry);
             }
